@@ -23,6 +23,7 @@ func main() {
 	db := database.ConnectDB()
 
 	entitiesToMigrate := []interface{}{
+		&entities.City{},
 		&entities.User{},
 	}
 
@@ -35,12 +36,16 @@ func main() {
 
 	authMiddleware := middlewares.AuthMiddleware{}
 
+	cityRepository := dataaccess.NewGormCityRepository(db)
 	userRepository := dataaccess.NewGormUserRepository(db)
 
+	cityService := services.CityService{Repo: cityRepository}
 	userService := services.UserService{Repo: userRepository}
 
+	cityHandler := handlers.CityHandler{Service: &cityService}
 	userHandler := handlers.UserHandler{Service: &userService}
 
+	routes.RegisterCityRoutes(router, &cityHandler)
 	routes.RegisterUserRoutes(router, &userHandler, authMiddleware)
 
 	err := router.Run("localhost:8080")

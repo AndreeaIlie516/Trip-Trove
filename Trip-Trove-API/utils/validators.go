@@ -70,3 +70,19 @@ func isComplexPassword(password string) bool {
 
 	return hasMinLen && hasMaxLen && hasUpper && hasLower && hasNumber && hasSpecial
 }
+
+func CountryValidator(fl validator.FieldLevel) bool {
+	name := fl.Field().String()
+
+	if len(name) < 3 || len(name) > 50 {
+		return false
+	}
+
+	for _, char := range name {
+		if !(char == ' ' || char == '-' || unicode.IsLetter(char)) {
+			return false
+		}
+	}
+
+	return true
+}

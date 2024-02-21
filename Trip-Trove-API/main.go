@@ -24,6 +24,7 @@ func main() {
 
 	entitiesToMigrate := []interface{}{
 		&entities.City{},
+		&entities.Location{},
 		&entities.User{},
 	}
 
@@ -37,15 +38,19 @@ func main() {
 	authMiddleware := middlewares.AuthMiddleware{}
 
 	cityRepository := dataaccess.NewGormCityRepository(db)
+	locationRepository := dataaccess.NewGormLocationRepository(db)
 	userRepository := dataaccess.NewGormUserRepository(db)
 
-	cityService := services.CityService{Repo: cityRepository}
+	cityService := services.CityService{Repo: cityRepository, LocationRepo: locationRepository}
+	locationService := services.LocationService{Repo: locationRepository, CityRepo: cityRepository}
 	userService := services.UserService{Repo: userRepository}
 
 	cityHandler := handlers.CityHandler{Service: &cityService}
+	locationHandler := handlers.LocationHandler{Service: &locationService}
 	userHandler := handlers.UserHandler{Service: &userService}
 
 	routes.RegisterCityRoutes(router, &cityHandler)
+	routes.RegisterLocationRoutes(router, &locationHandler)
 	routes.RegisterUserRoutes(router, &userHandler, authMiddleware)
 
 	err := router.Run("localhost:8080")

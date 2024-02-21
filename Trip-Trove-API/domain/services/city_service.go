@@ -8,7 +8,8 @@ import (
 )
 
 type CityService struct {
-	Repo repositories.CityRepository
+	Repo         repositories.CityRepository
+	LocationRepo repositories.LocationRepository
 }
 
 func (service *CityService) AllCities() ([]entities.City, error) {
@@ -44,6 +45,15 @@ func (service *CityService) DeleteCity(idStr string) (entities.City, error) {
 	var id uint
 	if _, err := fmt.Sscanf(idStr, "%d", &id); err != nil {
 		return entities.City{}, errors.New("invalid ID format")
+	}
+
+	locations, err := service.LocationRepo.LocationIDsForCity(id)
+	if err != nil {
+		return entities.City{}, err
+	}
+
+	if len(locations) > 0 {
+		return entities.City{}, errors.New("cannot delete city with associated locations")
 	}
 
 	city, err := service.Repo.DeleteCity(id)

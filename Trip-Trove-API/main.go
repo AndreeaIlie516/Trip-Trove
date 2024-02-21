@@ -23,6 +23,7 @@ func main() {
 	db := database.ConnectDB()
 
 	entitiesToMigrate := []interface{}{
+		&entities.InBucketList{},
 		&entities.BucketList{},
 		&entities.City{},
 		&entities.Destination{},
@@ -39,24 +40,28 @@ func main() {
 
 	authMiddleware := middlewares.AuthMiddleware{}
 
+	inBucketListRepository := dataaccess.NewGormInBucketListRepository(db)
 	bucketListRepository := dataaccess.NewGormBucketListRepository(db)
 	cityRepository := dataaccess.NewGormCityRepository(db)
 	destinationRepository := dataaccess.NewGormDestinationRepository(db)
 	locationRepository := dataaccess.NewGormLocationRepository(db)
 	userRepository := dataaccess.NewGormUserRepository(db)
 
+	inBucketListService := services.InBucketListService{Repo: inBucketListRepository, DestinationRepo: destinationRepository, BucketListRepo: bucketListRepository}
 	bucketListService := services.BucketListService{Repo: bucketListRepository, UserRepo: userRepository}
 	cityService := services.CityService{Repo: cityRepository, LocationRepo: locationRepository}
 	destinationService := services.DestinationService{Repo: destinationRepository, LocationRepo: locationRepository, CityRepo: cityRepository}
 	locationService := services.LocationService{Repo: locationRepository, CityRepo: cityRepository}
 	userService := services.UserService{Repo: userRepository}
 
+	inBucketListHandler := handlers.InBucketListHandler{Service: &inBucketListService}
 	bucketListHandler := handlers.BucketListHandler{Service: &bucketListService}
 	cityHandler := handlers.CityHandler{Service: &cityService}
 	destinationHandler := handlers.DestinationHandler{Service: &destinationService}
 	locationHandler := handlers.LocationHandler{Service: &locationService}
 	userHandler := handlers.UserHandler{Service: &userService}
 
+	routes.RegisterInBucketListRoutes(router, &inBucketListHandler)
 	routes.RegisterBucketListRoutes(router, &bucketListHandler)
 	routes.RegisterCityRoutes(router, &cityHandler)
 	routes.RegisterDestinationRoutes(router, &destinationHandler)

@@ -10,7 +10,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    let path = `/destinations/${data.id}`;
+    let path = `/destination/${data.id}`;
     navigate(path);
   };
 

@@ -12,6 +12,10 @@ const DestinationGrid: React.FC = () => {
   const itemsPerPage = 9;
   const nav = useNavigate();
 
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   return (
     <div>
       <Grid container columnSpacing={6} rowSpacing={6}>
@@ -31,6 +35,7 @@ const DestinationGrid: React.FC = () => {
         <Pagination
           count={Math.ceil(destinations.length / itemsPerPage)}
           page={page}
+          onChange={handleChange}
         />
       </Box>
     </div>

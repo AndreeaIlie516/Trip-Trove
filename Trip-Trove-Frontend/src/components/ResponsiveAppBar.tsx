@@ -25,7 +25,7 @@ export const ResponsiveAppBar: React.FC = () => {
 
   const navigate = useNavigate();
 
-  let pages: string[] = ["Public Destinations"];
+  let pages: string[] = ["Destinations"];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -42,8 +42,9 @@ export const ResponsiveAppBar: React.FC = () => {
     setAnchorElUser(null);
   };
 
-  const navigateToPage = (path: string) => {
-    navigate(path);
+  const handleNavigate = (page: string) => {
+    if (page == "Destinations") navigate("/");
+    handleCloseNavMenu();
   };
 
   return (
@@ -56,7 +57,7 @@ export const ResponsiveAppBar: React.FC = () => {
             sx={{
               display: { xs: "none", md: "flex" },
               marginRight: "8px",
-              marginLeft: { md: "2em" },
+              marginLeft: { md: "-1em" },
               width: "65px",
               height: "65px",
             }}
@@ -69,7 +70,6 @@ export const ResponsiveAppBar: React.FC = () => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -112,7 +112,7 @@ export const ResponsiveAppBar: React.FC = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={() => handleCloseNavMenu()}>
+                <MenuItem key={page} onClick={() => handleNavigate(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -123,7 +123,7 @@ export const ResponsiveAppBar: React.FC = () => {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => handleCloseNavMenu()}
+                onClick={() => handleNavigate(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -134,12 +134,15 @@ export const ResponsiveAppBar: React.FC = () => {
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
-              marginRight: { md: "6em" },
+              marginRight: { md: "5em" },
               width: "65px",
               height: "65px",
             }}
           >
-            <Button color="inherit">Log In</Button>
+            <Button color="inherit" sx={{ marginRight: "3em" }}>
+              Log In
+            </Button>
+
             <Button color="inherit">Register</Button>
           </Box>
         </Toolbar>

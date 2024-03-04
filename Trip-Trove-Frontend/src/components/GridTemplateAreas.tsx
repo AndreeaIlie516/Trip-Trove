@@ -9,8 +9,8 @@ const GridTemplateAreas: React.FC = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100vh",
+        width: "100vw",
+        minHeight: "100vh"
       }}
     >
       <Box
@@ -39,7 +39,7 @@ const GridTemplateAreas: React.FC = () => {
             color: "white",
             display: "flex",
             alignItems: "center",
-            marginTop: { md: "-0.45em" },
+            marginTop: { md: "-0.55em" },
             height: "475px",
             justifyContent: "center",
           }}
@@ -58,7 +58,15 @@ const GridTemplateAreas: React.FC = () => {
           </Typography>
         </Box>
         <Box sx={{ gridArea: "aside" }}></Box>
-        <Box sx={{ gridArea: "main", marginTop: { md: "3em" } }}>
+        <Box
+          sx={{
+            gridArea: "main",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            paddingTop: "20px",
+          }}
+        >
           <DestinationGrid />
         </Box>
         <Box sx={{ gridArea: "sidebar" }}></Box>

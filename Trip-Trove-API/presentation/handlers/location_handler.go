@@ -36,20 +36,6 @@ func (handler *LocationHandler) LocationByID(c *gin.Context) {
 	c.JSON(http.StatusOK, location)
 }
 
-func (handler *LocationHandler) LocationsByCityID(c *gin.Context) {
-	cityID := c.Param("cityId")
-	locations, err := handler.Service.LocationsByCityID(cityID)
-	if err != nil {
-		if err.Error() == "invalid ID format" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		} else {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		}
-		return
-	}
-	c.JSON(http.StatusOK, locations)
-}
-
 func (handler *LocationHandler) CreateLocation(c *gin.Context) {
 	var newLocation entities.Location
 

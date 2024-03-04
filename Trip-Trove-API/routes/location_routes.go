@@ -10,7 +10,6 @@ func RegisterLocationRoutes(router *gin.Engine, locationHandler *handlers.Locati
 	{
 		locationGroup.GET("/", locationHandler.AllLocations)
 		locationGroup.GET("/:id", locationHandler.LocationByID)
-		locationGroup.GET("/city/:cityId", locationHandler.LocationsByCityID)
 		locationGroup.POST("/", locationHandler.CreateLocation)
 		locationGroup.PUT("/:id", locationHandler.UpdateLocation)
 		locationGroup.DELETE("/:id", locationHandler.DeleteLocation)

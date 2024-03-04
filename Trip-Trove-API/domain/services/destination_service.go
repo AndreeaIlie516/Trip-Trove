@@ -10,13 +10,11 @@ import (
 type DestinationService struct {
 	Repo         repositories.DestinationRepository
 	LocationRepo repositories.LocationRepository
-	CityRepo     repositories.CityRepository
 }
 
 type DestinationDetails struct {
 	Destination entities.Destination
 	Location    entities.Location
-	City        entities.City
 }
 
 type DestinationWithLocation struct {
@@ -27,11 +25,6 @@ type DestinationWithLocation struct {
 type DestinationsByLocation struct {
 	Location     entities.Location
 	Destinations []entities.Destination
-}
-
-type DestinationsByCity struct {
-	City         entities.City
-	Destinations []DestinationWithLocation
 }
 
 func (service *DestinationService) AllDestinations() ([]entities.Destination, error) {
@@ -58,15 +51,9 @@ func (service *DestinationService) DestinationByID(idStr string) (*DestinationDe
 		return nil, err
 	}
 
-	city, err := service.CityRepo.CityByID(location.CityID)
-	if err != nil {
-		return nil, err
-	}
-
 	destinationDetails := &DestinationDetails{
 		Destination: *destination,
 		Location:    *location,
-		City:        *city,
 	}
 	return destinationDetails, nil
 }
@@ -99,41 +86,6 @@ func (service *DestinationService) DestinationsByLocationID(locationIDStr string
 	}
 
 	return destinationsByLocation, nil
-}
-
-func (service *DestinationService) DestinationsByCityID(cityIDStr string) (*DestinationsByCity, error) {
-	var cityID uint
-	if _, err := fmt.Sscanf(cityIDStr, "%d", &cityID); err != nil {
-		return nil, errors.New("invalid ID format")
-	}
-
-	city, err := service.CityRepo.CityByID(cityID)
-	if err != nil {
-		return &DestinationsByCity{}, err
-	}
-
-	destinationIDs, err := service.Repo.DestinationIDsForCity(cityID)
-	var destinations []DestinationWithLocation
-
-	for _, destinationID := range destinationIDs {
-		destination, err := service.Repo.DestinationByID(destinationID)
-		if err != nil {
-			return &DestinationsByCity{}, err
-		}
-		location, _ := service.LocationRepo.LocationByID(destination.LocationID)
-		destinationWithLocation := &DestinationWithLocation{
-			Destination: *destination,
-			Location:    *location,
-		}
-		destinations = append(destinations, *destinationWithLocation)
-	}
-
-	destinationsByCity := &DestinationsByCity{
-		City:         *city,
-		Destinations: destinations,
-	}
-
-	return destinationsByCity, nil
 }
 
 func (service *DestinationService) CreateDestination(destination entities.Destination) (entities.Destination, error) {

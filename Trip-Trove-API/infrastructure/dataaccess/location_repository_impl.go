@@ -43,16 +43,6 @@ func (r *GormLocationRepository) LocationByID(id uint) (*entities.Location, erro
 	return &location, nil
 }
 
-func (r *GormLocationRepository) LocationIDsForCity(cityID uint) ([]uint, error) {
-	var locationIDs []uint
-
-	if err := r.Db.Where("city_id = ?", cityID).Model(&entities.Location{}).Select("ID").Find(&locationIDs).Error; err != nil {
-		return nil, err
-	}
-
-	return locationIDs, nil
-}
-
 func (r *GormLocationRepository) CreateLocation(location entities.Location) (entities.Location, error) {
 	if err := r.Db.Create(&location).Error; err != nil {
 		return entities.Location{}, err

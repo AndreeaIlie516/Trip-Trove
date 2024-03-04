@@ -7,7 +7,6 @@ type DestinationRepository interface {
 	AllDestinationIDs() ([]uint, error)
 	DestinationByID(id uint) (*entities.Destination, error)
 	DestinationIDsForLocation(locationID uint) ([]uint, error)
-	DestinationIDsForCity(cityID uint) ([]uint, error)
 	CreateDestination(destination entities.Destination) (entities.Destination, error)
 	UpdateDestination(id uint, updatedDestination entities.Destination) (entities.Destination, error)
 	DeleteDestination(id uint) (entities.Destination, error)

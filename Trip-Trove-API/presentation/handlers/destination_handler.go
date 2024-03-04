@@ -50,20 +50,6 @@ func (handler *DestinationHandler) DestinationsByLocationID(c *gin.Context) {
 	c.JSON(http.StatusOK, destinations)
 }
 
-func (handler *DestinationHandler) DestinationsByCityID(c *gin.Context) {
-	cityID := c.Param("cityId")
-	destinations, err := handler.Service.DestinationsByCityID(cityID)
-	if err != nil {
-		if err.Error() == "invalid ID format" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		} else {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		}
-		return
-	}
-	c.JSON(http.StatusOK, destinations)
-}
-
 func (handler *DestinationHandler) CreateDestination(c *gin.Context) {
 	var newDestination entities.Destination
 

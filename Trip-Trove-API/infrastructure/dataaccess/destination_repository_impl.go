@@ -53,19 +53,6 @@ func (r *GormDestinationRepository) DestinationIDsForLocation(locationID uint) (
 	return destinationIDs, nil
 }
 
-func (r *GormDestinationRepository) DestinationIDsForCity(cityID uint) ([]uint, error) {
-	var destinationIDs []uint
-
-	if err := r.Db.Table("destinations").Select("destination.id").
-		Joins("join locations on locations.id = destination.location_id").
-		Where("locations.city_id = ?", cityID).
-		Pluck("destination.id", &destinationIDs).Error; err != nil {
-		return nil, err
-	}
-
-	return destinationIDs, nil
-}
-
 func (r *GormDestinationRepository) CreateDestination(destination entities.Destination) (entities.Destination, error) {
 	if err := r.Db.Create(&destination).Error; err != nil {
 		return entities.Destination{}, err

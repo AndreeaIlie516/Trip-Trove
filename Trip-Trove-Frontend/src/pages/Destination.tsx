@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import { Box, Typography, Divider } from "@mui/material";
 import { Destination } from "../interfaces/Destination";
-import { destinations } from "../mock/Data";
+import { Location } from "../interfaces/Location";
+import { destinations, locations } from "../mock/Data";
 
 export function DestinationPage() {
   const { id } = useParams<{ id: string }>();
   const [destination, setDestination] = useState<Destination | null>(null);
+  const [location, setLocation] = useState<Location | null>(null);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -16,12 +18,18 @@ export function DestinationPage() {
     );
     if (foundDestination) {
       setDestination(foundDestination);
+      const foundLocation = locations.find(
+        (loc) => loc.id === foundDestination.locationId
+      );
+      if (foundLocation) {
+        setLocation(foundLocation);
+      }
     } else {
       console.error("Destination not found");
     }
   }, [id, nav]);
 
-  if (!destination) {
+  if (!destination || !location) {
     return (
       <Typography variant="h4" align="center">
         Loading...
@@ -77,7 +85,10 @@ export function DestinationPage() {
             </Typography>
             <Divider sx={{ mb: 2 }} />
             <Typography variant="h6" component="h3" sx={{ mb: 1 }}>
-              Location: {destination.location}
+              Location: {location.name}
+            </Typography>
+            <Typography variant="subtitle1" component="h3" sx={{ mb: 1 }}>
+              Country: {location.country}
             </Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>
               {destination.description}

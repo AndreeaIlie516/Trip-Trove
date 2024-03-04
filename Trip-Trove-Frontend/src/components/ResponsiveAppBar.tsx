@@ -57,7 +57,7 @@ export const ResponsiveAppBar: React.FC = () => {
             sx={{
               display: { xs: "none", md: "flex" },
               marginRight: "8px",
-              marginLeft: { md: "-1em" },
+              marginLeft: { md: "2em" },
               width: "65px",
               height: "65px",
             }}
@@ -134,7 +134,7 @@ export const ResponsiveAppBar: React.FC = () => {
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
-              marginRight: { md: "5em" },
+              marginRight: { md: "12em" },
               width: "65px",
               height: "65px",
             }}

@@ -4,9 +4,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { DestinationCardProps } from "../interfaces/Destination";
+import { IDestinationCardProps } from "../interfaces/Destination";
 
-const DestinationCard: React.FC<DestinationCardProps> = ({ data }) => {
+const DestinationCard: React.FC<IDestinationCardProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {

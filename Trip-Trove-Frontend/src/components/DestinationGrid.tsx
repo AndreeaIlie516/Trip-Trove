@@ -5,9 +5,10 @@ import DestinationCard from "./DestinationCard";
 import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
-import { destinations } from "../mock/Data";
+import { useDestinations } from "../contexts/DestinationContext";
 
 const DestinationGrid: React.FC = () => {
+  const { destinations } = useDestinations();
   const [page, setPage] = useState(1);
   const itemsPerPage = 9;
   const nav = useNavigate();

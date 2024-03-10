@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import DestinationGrid from "./DestinationGrid";
+import Footer from "./Footer";
 import background from "../assets/view_background.jpeg";
 
 const GridTemplateAreas: React.FC = () => {
@@ -70,24 +71,7 @@ const GridTemplateAreas: React.FC = () => {
           <DestinationGrid />
         </Box>
         <Box sx={{ gridArea: "sidebar" }}></Box>
-        <Box
-          sx={{
-            gridArea: "footer",
-            bgcolor: "#3874cb",
-            marginTop: { md: "1.5em" },
-            height: "70px",
-          }}
-        >
-          <Typography
-            variant="h6"
-            component="div"
-            align="center"
-            color="white"
-            marginTop="20px"
-          >
-            Trip Trove, toate drepturile rezervate @ MPP (kill me please)
-          </Typography>
-        </Box>
+        <Footer />
       </Box>
     </Box>
   );

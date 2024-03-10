@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import Footer from "../components/Footer";
 import { Box, Typography, Divider } from "@mui/material";
-import { Destination } from "../interfaces/Destination";
-import { Location } from "../interfaces/Location";
-import { destinations, locations } from "../mock/Data";
+import { IDestination } from "../interfaces/Destination";
+import { ILocation } from "../interfaces/Location";
+import { useDestinations } from "../contexts/DestinationContext";
+import { useLocations } from "../contexts/LocationContext";
 
-export function DestinationPage() {
+export function Destination() {
   const { id } = useParams<{ id: string }>();
-  const [destination, setDestination] = useState<Destination | null>(null);
-  const [location, setLocation] = useState<Location | null>(null);
+  const { getDestinationById } = useDestinations();
+  const { getLocationById } = useLocations();
+  const [destination, setDestination] = useState<IDestination | undefined>();
+  const [location, setLocation] = useState<ILocation | undefined>();
   const nav = useNavigate();
 
   useEffect(() => {
-    const foundDestination = destinations.find(
-      (dest) => dest.id.toString() === id
-    );
-    if (foundDestination) {
-      setDestination(foundDestination);
-      const foundLocation = locations.find(
-        (loc) => loc.id === foundDestination.locationId
-      );
-      if (foundLocation) {
-        setLocation(foundLocation);
+    const fetchDestinationDetails = async () => {
+      if (!id) {
+        return null;
       }
-    } else {
-      console.error("Destination not found");
-    }
-  }, [id, nav]);
+      const fetchedDestination = await getDestinationById(parseInt(id));
+      setDestination(fetchedDestination);
+    };
+    fetchDestinationDetails();
+    console.log(destination)
+
+    const fetchLocationDetails = async () => {
+      if (!destination) {
+        return null;
+      }
+      if (!destination.location_id) {
+        return null;
+      }
+      const fetchedLocation = await getLocationById(destination.location_id);
+      setLocation(fetchedLocation);
+    };
+    fetchLocationDetails();
+    console.log(location)
+
+  });
 
   if (!destination || !location) {
     return (
@@ -95,26 +108,7 @@ export function DestinationPage() {
             </Typography>
           </Box>
         </Box>
-        <Box
-          sx={{
-            width: "100vw",
-            textAlign: "center",
-            py: 2,
-            bgcolor: "#3874cb",
-            color: "white",
-            height: "40px",
-          }}
-        >
-          <Typography
-            variant="h6"
-            component="div"
-            align="center"
-            color="white"
-            marginTop="20px"
-          >
-            Trip Trove, toate drepturile rezervate @ MPP (kill me please)
-          </Typography>
-        </Box>
+        <Footer />
       </Box>
     );
   }

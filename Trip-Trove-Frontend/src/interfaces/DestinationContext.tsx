@@ -4,9 +4,9 @@ import { IDestination } from "./Destination";
 export interface IDestinationContext {
   destinations: IDestination[];
   getDestinationById: (id: number) => Promise<IDestination | undefined>;
-  //addDestination: (destination: Destination) => void;
-  //updateDestination: (destination: Destination) => void;
-  //deleteDestination: (id: number) => void;
+  addDestination: (destination: IDestination) => void;
+  updateDestination: (destination: IDestination) => void;
+  deleteDestination: (id: string) => void;
 }
 
 export interface IDestinationProviderProps {

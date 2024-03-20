@@ -10,8 +10,6 @@ type User struct {
 	FirstName   string     `gorm:"column:first_name;not null" json:"first_name" binding:"required" validate:"required,nameValidator"`
 	LastName    string     `gorm:"column:last_name;not null" json:"last_name" binding:"required" validate:"required,nameValidator"`
 	PhoneNumber string     `gorm:"column:phone_number;unique;not null" json:"phone_number" binding:"required" validate:"required,e164"`
-	DateOfBirth string     `gorm:"column:date_of_birth" json:"date_of_birth" binding:"required" validate:"max=20"`
-	Address     string     `gorm:"column:address" json:"address" binding:"required" validate:"max=100"`
 	Role        AccessType `gorm:"column:access_type,type:tinyint;not null"`
 }
 

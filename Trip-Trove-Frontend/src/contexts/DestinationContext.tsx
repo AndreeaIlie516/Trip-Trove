@@ -22,22 +22,23 @@ export function useDestinations() {
 export const DestinationProvider: React.FC<IDestinationProviderProps> = ({
   children,
 }) => {
-  const [destinations, setDestination] = useState<IDestination[]>([]);
+  const [destinations, setDestinations] = useState<IDestination[]>([]);
+
+  const fetchDestinations = async () => {
+    try {
+      const response = await fetch(destinationUrl);
+      if (!response.ok) {
+        throw new Error("Could not fetch destinations");
+      }
+      const data = (await response.json()) as IDestination[];
+      console.log("data", data);
+      setDestinations(data);
+    } catch (error: unknown) {
+      console.error(`Error`);
+    }
+  };
 
   useEffect(() => {
-    const fetchDestinations = async () => {
-      try {
-        const response = await fetch(destinationUrl);
-        if (!response.ok) {
-          throw new Error("Could not fetch destinations");
-        }
-        const data = (await response.json()) as IDestination[];
-        console.log("data", data);
-        setDestination(data);
-      } catch (error: unknown) {
-        console.error(`Error`);
-      }
-    };
     fetchDestinations();
   }, []);
 
@@ -54,8 +55,54 @@ export const DestinationProvider: React.FC<IDestinationProviderProps> = ({
       }
   }
 
+  const addDestination = async (destination: IDestination) => {
+    try {
+      const response = await fetch(destinationUrl, {
+        method: 'POST',
+        body: JSON.stringify(destination)
+      })
+      if (!response.ok) {
+        throw new Error('could not add destination');
+      }
+      await fetchDestinations();
+    } catch (error: unknown) {
+      console.log('error');
+    }
+  }
+
+  const deleteDestination = async (id: string) => {
+    console.log(`delete called for destination ${id}`)
+    try {
+      const response = await fetch(`${destinationUrl}/${id}`, {
+        method: 'DELETE',
+      });
+      if(!response.ok) {
+        throw new Error('cannot delete destination');
+      }
+      await fetchDestinations();
+    } catch (err: unknown) {
+      console.log(`error`);
+    }
+  }
+
+  const updateDestination = async (destination: IDestination) => {
+    try {
+      const response = await fetch(`${destinationUrl}/${destination.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(destination)
+      })
+      if (!response.ok) {
+        throw new Error('could not update destination');
+      }
+      await fetchDestinations();
+    } catch (err: unknown) {
+      console.log('error');
+    }
+  }
+
+
   return (
-    <DestinationContext.Provider value={{ destinations, getDestinationById }}>
+    <DestinationContext.Provider value={{ destinations, getDestinationById, addDestination, deleteDestination, updateDestination }}>
       {children}
     </DestinationContext.Provider>
   );

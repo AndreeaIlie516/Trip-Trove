@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import Footer from "../components/Footer";
-import { Box, Typography, Divider } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+} from "@mui/material";
 import { IDestination } from "../interfaces/Destination";
 import { ILocation } from "../interfaces/Location";
 import { useDestinations } from "../contexts/DestinationContext";
@@ -10,11 +20,32 @@ import { useLocations } from "../contexts/LocationContext";
 
 export function Destination() {
   const { id } = useParams<{ id: string }>();
-  const { getDestinationById } = useDestinations();
+  const { getDestinationById, deleteDestination } = useDestinations();
   const { getLocationById } = useLocations();
   const [destination, setDestination] = useState<IDestination | undefined>();
   const [location, setLocation] = useState<ILocation | undefined>();
-  const nav = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const handleClickOpen = (id: string) => {
+    console.log("Delete button clicked");
+    setOpen(true);
+    setDeleteId(id);
+  };
+
+  const handleClose = () => {
+    console.log("Delete dialog closed");
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    console.log("Delete dialog confirmed");
+    if (deleteId) {
+      deleteDestination(deleteId);
+      setDeleteId(null);
+    }
+    setOpen(false);
+  };
 
   useEffect(() => {
     const fetchDestinationDetails = async () => {
@@ -25,7 +56,7 @@ export function Destination() {
       setDestination(fetchedDestination);
     };
     fetchDestinationDetails();
-    console.log(destination)
+    console.log(destination);
 
     const fetchLocationDetails = async () => {
       if (!destination) {
@@ -38,8 +69,7 @@ export function Destination() {
       setLocation(fetchedLocation);
     };
     fetchLocationDetails();
-    console.log(location)
-
+    console.log(location);
   });
 
   if (!destination || !location) {
@@ -106,9 +136,48 @@ export function Destination() {
             <Typography variant="body1" sx={{ mb: 2 }}>
               {destination.description}
             </Typography>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to={`/destinations/update/${destination.id}`}
+                sx={{ mr: 1 }}
+              >
+                Update
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleClickOpen(destination.id)}
+              >
+                Delete
+              </Button>
+            </Box>
           </Box>
         </Box>
         <Footer />
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirm Deletion"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this destination?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleDelete} color="error">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     );
   }

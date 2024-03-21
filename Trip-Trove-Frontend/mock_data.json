@@ -20,6 +20,7 @@
       "location_id": 1,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2021/10/madeira-8-1078x516.jpg",
       "description": "Cea mai superba insula din Oceanul Atlantic",
+      "visitors_last_year": 4000,
       "is_private": false
     },
     {
@@ -27,6 +28,7 @@
       "name": "Vacanta in Croatia, 262 euro! (zbor direct + cazare 7 nopti)",
       "location_id": 2,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2022/06/croatia-split-22-1078x516.jpg",
+      "visitors_last_year": 100000,
       "is_private": false
     },
     {
@@ -34,6 +36,7 @@
       "name": "Vacanta de VARA in Antalya, 186 euro! (zbor + cazare 7 nopti)",
       "location_id": 3,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2022/12/antalya-02-1078x516.jpg",
+      "visitors_last_year": 50000,
       "is_private": false
     },
     {
@@ -41,6 +44,7 @@
       "name": "Vacanta de primavara in Toscana, 191 euro! (zbor + cazare 5 nopti)",
       "location_id": 4,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2021/10/cinque-terre-2-1078x516.jpg",
+      "visitors_last_year": 70000,
       "is_private": false
     },
     {
@@ -48,6 +52,7 @@
       "name": "Vacanta in Santorini, 356 euro! (zbor + cazare 7 nopti)",
       "location_id": 5,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2023/06/santorini-455-702x336.jpg",
+      "visitors_last_year": 100000,
       "is_private": false
     },
     {
@@ -55,6 +60,7 @@
       "name": "Vacanta in Napoli si Coasta Amalfi, 185 euro! (zbor + cazare 4 nopti)",
       "location_id": 6,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2021/09/amalfi-aventurescu-zboruri-si-vacante-ieftine-820x390.jpg",
+      "visitors_last_year": 120000,
       "is_private": false
     },
     {
@@ -62,6 +68,7 @@
       "name": "City break de primavara la Viena, 138 euro! (zbor + cazare 3 nopti)",
       "location_id": 7,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2022/01/viena23-1078x516.jpg",
+      "visitors_last_year": 80000,
       "is_private": false
     },
     {
@@ -69,6 +76,7 @@
       "name": "Vacanta in Umbria, 136 euro! (zbor + cazare 4 nopti)",
       "location_id": 8,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2022/07/spello-umbria-1078x516.jpg",
+      "visitors_last_year": 3000,
       "is_private": false
     },
     {
@@ -76,6 +84,7 @@
       "name": "Vacanta in Egipt, 129 euro! (zbor din Budapesta + cazare 5 nopti)",
       "location_id": 9,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2019/03/aventurescu-cairo-piramide-820x390.jpg",
+      "visitors_last_year": 40000,
       "is_private": false
     },
     {
@@ -83,6 +92,7 @@
       "name": "Primavara in Salonic, 103 euro! (zbor + cazare 3 nopti)",
       "location_id": 10,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2023/06/salonic-444-702x336.jpg",
+      "visitors_last_year": 55000,
       "is_private": false
     },
     {
@@ -90,6 +100,7 @@
       "name": "City break in Berlin, 165 euro! (zbor + cazare 3 nopti)",
       "location_id": 11,
       "image_url": "https://aventurescu.ro/wp-content/uploads/2017/04/berlin-3-820x390.jpg",
+      "visitors_last_year": 200000,
       "is_private": false
     }
   ]
